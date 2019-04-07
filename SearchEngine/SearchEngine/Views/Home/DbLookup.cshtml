@@ -1,0 +1,38 @@
+﻿@using SearchEngine.Core.Models
+@model IEnumerable<Result>
+@{
+    ViewBag.Title = "Internet Search Page";
+}
+
+
+@Html.ActionLink("Search in the Internet", "Index", null, new { @class = "btn btn-primary" })
+<hr>
+
+@using (Html.BeginForm("DbSearch", "Home", FormMethod.Post))
+{
+    <p>
+        <div>
+            <input type="text" name="searchString" class="col-md-10 form-control">
+            <input type="submit" value="DataBase Search" class="btn btn-success " />
+        </div>
+    </p>
+}
+
+@if (Model != null)
+{
+    foreach (var m in Model)
+    {
+        <div class="media">
+            <div class="media-body">
+                <h2 class="media-heading"><a href="@m.Link" target="_blank">@m.Title</a></h2>
+                <p>@m.Snippet</p>
+            </div>
+        </div>
+        if (!String.IsNullOrEmpty(m.Source))
+        {
+            <h6>
+                Source: <a href="@m.Source"></a>
+            </h6>
+        }
+    }
+}
